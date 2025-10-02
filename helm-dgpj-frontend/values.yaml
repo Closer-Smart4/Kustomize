@@ -85,19 +85,19 @@ externalSecrets:
       data:
         - secretKey: backend_api_key
           remoteRef:
-            key: frontend
+            key: dgpj/frontend
             property: backend_api_key
         - secretKey: fastapi_health_url
           remoteRef:
-            key: frontend
+            key: dgpj/frontend
             property: fastapi_health_url
         - secretKey: fastapi_url
           remoteRef:
-            key: frontend
+            key: dgpj/frontend
             property: fastapi_url
         - secretKey: frontend_user_key
           remoteRef:
-            key: frontend
+            key: dgpj/frontend
             property: frontend_user_key
 
 secretStore:
