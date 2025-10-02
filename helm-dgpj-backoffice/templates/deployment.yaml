@@ -49,19 +49,9 @@ spec:
           env:
             - name: ENV_NAME
               value: "{{ .Values.envName }}"
-            - name: USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: dgpj-secrets-injected
-                  key: username
-            - name: PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: dgpj-secrets-injected
-                  key: password
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8501
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:

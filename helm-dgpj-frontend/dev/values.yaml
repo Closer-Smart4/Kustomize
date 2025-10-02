@@ -1,4 +1,4 @@
-# Default values for helm-dgpj-backend.
+# Default values for helm-dgpj-frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -7,11 +7,11 @@ replicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: acrframeworkshared.azurecr.io/helm-dgpj-backend
+  repository: acrframeworkshared.azurecr.io/helm-dgpj-frontend
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.0.1-26feeac"
 
 application:
   env: prod
@@ -69,51 +69,39 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: backend
+    - name: frontend
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
-        name: dgpj-backend
+        name: dgpj-frontend
         namespace: argocd
       refreshInterval: "15s"
       secretStoreRef:
-        name: vault-backend
+        name: vault-frontend
         kind: ClusterSecretStore
       target:
-        name: dgpj-backend-secrets
+        name: dgpj-frontend-secrets
         creationPolicy: Owner
       data:
         - secretKey: backend_api_key
           remoteRef:
-            key: dgpj/backend
+            key: dgpj/frontend
             property: backend_api_key
-        - secretKey: llm_service_api_key
+        - secretKey: fastapi_health_url
           remoteRef:
-            key: dgpj/backend
-            property: llm_service_api_key
-        - secretKey: llm_service_azure_prompt_llm
+            key: dgpj/frontend
+            property: fastapi_health_url
+        - secretKey: fastapi_url
           remoteRef:
-            key: dgpj/backend
-            property: llm_service_azure_prompt_llm
-        - secretKey: llm_service_endpoint
+            key: dgpj/frontend
+            property: fastapi_url
+        - secretKey: frontend_user_key
           remoteRef:
-            key: dgpj/backend
-            property: llm_service_endpoint
-        - secretKey: vector_db_service_api_key
-          remoteRef:
-            key: dgpj/backend
-            property: vector_db_service_api_key
-        - secretKey: vector_db_service_chromadb_query_route
-          remoteRef:
-            key: dgpj/backend
-            property: vector_db_service_chromadb_query_route
-        - secretKey: vector_db_service_endpoint
-          remoteRef:
-            key: dgpj/backend
-            property: vector_db_service_endpoint
+            key: dgpj/frontend
+            property: frontend_user_key
 
 secretStore:
-  name: vault-backend
+  name: vault-frontend
   provider:
     vault:
       server: "http://vault.vault:8200"
@@ -157,13 +145,13 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: 8000
+    port: 8501
   initialDelaySeconds: 10
   periodSeconds: 5
 readinessProbe:
   httpGet:
     path: /
-    port: 8000
+    port: 8501
   initialDelaySeconds: 10
   periodSeconds: 5
 

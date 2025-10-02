@@ -66,43 +66,6 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8000
 
-externalSecrets:
-  enabled: true
-  secrets:
-    - name: dgpj-secrets
-      apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      metadata:
-        name: dgpj-secrets
-        namespace: argocd
-      refreshInterval: "15s"
-      secretStoreRef:
-        name: vault-backend
-        kind: ClusterSecretStore
-      target:
-        name: dgpj-secrets-injected
-        creationPolicy: Owner
-      data:
-        - secretKey: username
-          remoteRef:
-            key: dgpj-secrets
-            property: username
-        - secretKey: password
-          remoteRef:
-            key: dgpj-secrets
-            property: password
-
-secretStore:
-  name: vault-backend
-  provider:
-    vault:
-      server: "http://vault.vault:8200"
-      path: "secret"
-      version: "v2"
-      auth:
-        kubernetes:
-          mountPath: "kubernetes"
-          role: "dgpj"
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
