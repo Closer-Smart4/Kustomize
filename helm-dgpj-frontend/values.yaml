@@ -69,11 +69,11 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: frontend
+    - name: dgpj2
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
-        name: frontend
+        name: dgpj2
         namespace: argocd
       refreshInterval: "15s"
       secretStoreRef:
@@ -85,19 +85,19 @@ externalSecrets:
       data:
         - secretKey: backend_api_key
           remoteRef:
-            key: frontend
+            key: dgpj2
             property: backend_api_key
         - secretKey: fastapi_health_url
           remoteRef:
-            key: frontend
+            key: dgpj2
             property: fastapi_health_url
         - secretKey: fastapi_url
           remoteRef:
-            key: frontend
+            key: dgpj2
             property: fastapi_url
         - secretKey: frontend_user_key
           remoteRef:
-            key: frontend
+            key: dgpj2
             property: frontend_user_key
 
 secretStore:
