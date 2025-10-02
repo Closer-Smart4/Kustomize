@@ -69,7 +69,7 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: frontend
+    - name: dgpj/frontend
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
