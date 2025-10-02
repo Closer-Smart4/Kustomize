@@ -49,16 +49,41 @@ spec:
           env:
             - name: ENV_NAME
               value: "{{ .Values.envName }}"
-            - name: USERNAME
+            - name: BACKEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: backend_api_key
+            - name: LLM_SERVICE_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: dgpj-secrets-injected
-                  key: username
-            - name: PASSWORD
+                  key: llm_service_api_key
+            - name: LLM_SERVICE_AZURE_PROMPT_LLM
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: llm_service_azure_prompt_llm
+            - name: LLM_SERVICE_ENDPOINT
               valueFrom:
                 secretKeyRef:
                   name: dgpj-secrets-injected
-                  key: password
+                  key: llm_service_endpoint
+            - name: VECTOR_DB_SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: vector_db_service_api_key
+            - name: VECTOR_DB_SERVICE_CHROMADB_QUERY_ROUTE
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-secrets-injected
+                  key: vector_db_service_chromadb_query_route
+            - name: VECTOR_DB_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: vector_db_service_endpoint
           ports:
             - name: http
               containerPort: 80
