@@ -73,7 +73,7 @@ externalSecrets:
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
-        name: dgpj/frontend
+        name: dgpj-frontend
         namespace: argocd
       refreshInterval: "15s"
       secretStoreRef:
