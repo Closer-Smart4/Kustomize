@@ -52,22 +52,22 @@ spec:
             - name: BACKEND_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-frontend
+                  name: dgpj-frontend-secrets
                   key: backend_api_key
             - name: FASTAPI_HEALTH_URL
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-frontend
+                  name: dgpj-frontend-secrets
                   key: fastapi_health_url
             - name: FASTAPI_URL
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-frontend
+                  name: dgpj-frontend-secrets
                   key: fastapi_url
             - name: FRONTEND_USER_KEY
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-frontend
+                  name: dgpj-frontend-secrets
                   key: frontend_user_key
             
           ports:
