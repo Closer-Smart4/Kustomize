@@ -85,19 +85,19 @@ externalSecrets:
       data:
         - secretKey: backend_api_key
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: backend_api_key
         - secretKey: fastapi_health_url
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: fastapi_health_url
         - secretKey: fastapi_url
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: fastapi_url
         - secretKey: frontend_user_key
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: frontend_user_key
 
 secretStore:
@@ -105,7 +105,7 @@ secretStore:
   provider:
     vault:
       server: "http://vault.vault:8200"
-      path: "secret/dgpj"
+      path: "secret/dgpj/"
       version: "v2"
       auth:
         kubernetes:
