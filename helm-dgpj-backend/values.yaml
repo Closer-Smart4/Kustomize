@@ -69,35 +69,55 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: dgpj-secrets
+    - name: backend
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
-        name: dgpj-secrets
+        name: dgpj-backend
         namespace: argocd
       refreshInterval: "15s"
       secretStoreRef:
         name: vault-backend
         kind: ClusterSecretStore
       target:
-        name: dgpj-secrets-injected
+        name: dgpj-backend-secrets
         creationPolicy: Owner
       data:
-        - secretKey: username
+        - secretKey: backend_api_key
           remoteRef:
-            key: dgpj-secrets
-            property: username
-        - secretKey: password
+            key: dgpj/backend
+            property: backend_api_key
+        - secretKey: llm_service_api_key
           remoteRef:
-            key: dgpj-secrets
-            property: password
+            key: dgpj/backend
+            property: llm_service_api_key
+        - secretKey: llm_service_azure_prompt_llm
+          remoteRef:
+            key: dgpj/backend
+            property: llm_service_azure_prompt_llm
+        - secretKey: llm_service_endpoint
+          remoteRef:
+            key: dgpj/backend
+            property: llm_service_endpoint
+        - secretKey: vector_db_service_api_key
+          remoteRef:
+            key: dgpj/backend
+            property: vector_db_service_api_key
+        - secretKey: vector_db_service_chromadb_query_route
+          remoteRef:
+            key: dgpj/backend
+            property: vector_db_service_chromadb_query_route
+        - secretKey: vector_db_service_endpoint
+          remoteRef:
+            key: dgpj/backend
+            property: vector_db_service_endpoint
 
 secretStore:
   name: vault-backend
   provider:
     vault:
       server: "http://vault.vault:8200"
-      path: "secret"
+      path: "secret/"
       version: "v2"
       auth:
         kubernetes:
