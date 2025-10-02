@@ -1,0 +1,25 @@
+# Ignore Git metadata
+.git/
+.gitignore
+
+# Ignore scripts
+scripts/
+*.sh
+
+# Ignore documentation
+README.md
+*.md
+
+# Ignore editor or OS temp files
+*.swp
+.DS_Store
+
+# Ignore CI/CD pipeline files if not needed
+azure-pipelines.yml
+
+# Ignore test folders
+tests/
+
+# Ignore compiled binaries or archives
+*.zip
+*.tar.gz
