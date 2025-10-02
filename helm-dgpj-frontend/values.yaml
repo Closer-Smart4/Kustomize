@@ -105,7 +105,7 @@ secretStore:
   provider:
     vault:
       server: "http://vault.vault:8200"
-      path: "secret"
+      path: "secret/"
       version: "v2"
       auth:
         kubernetes:
