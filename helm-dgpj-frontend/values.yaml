@@ -69,11 +69,11 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: dgpj/frontend
+    - name: frontend
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
-        name: dgpj-frontend
+        name: frontend
         namespace: argocd
       refreshInterval: "15s"
       secretStoreRef:
