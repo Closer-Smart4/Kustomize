@@ -69,7 +69,7 @@ service:
 externalSecrets:
   enabled: true
   secrets:
-    - name: dgpj/frontend
+    - name: frontend
       apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       metadata:
@@ -85,19 +85,19 @@ externalSecrets:
       data:
         - secretKey: backend_api_key
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: backend_api_key
         - secretKey: fastapi_health_url
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: fastapi_health_url
         - secretKey: fastapi_url
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: fastapi_url
         - secretKey: frontend_user_key
           remoteRef:
-            key: dgpj/frontend
+            key: frontend
             property: frontend_user_key
 
 secretStore:
