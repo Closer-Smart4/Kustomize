@@ -10,7 +10,7 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.1-b1020a0"
+  tag: "0.0.1-e86f7e9"
 application:
   env: prod
   appCode: dgpj
