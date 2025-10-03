@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "dgpj-vectordb.fullname" . }}-test-connection"
+  labels:
+    {{- include "dgpj-vectordb.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "dgpj-vectordb.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dgpj-backend.fullname" . }}
+  labels:
+    {{- include "dgpj-backend.labels" . | nindent 4 }}
+  annotations:
+    {{- if and .Values.downscaler (hasKey .Values.downscaler "enabled") (eq .Values.downscaler.enabled true) }}
+    downscaler/downscale-period: "{{ .Values.downscaler.downscalePeriod }}"
+    {{- else }}
+    downscaler/disabled: "true"
+    {{- end }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "dgpj-backend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "dgpj-backend.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "dgpj-backend.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ENV_NAME
+              value: "{{ .Values.envName }}"
+            - name: BACKEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: backend_api_key
+            - name: LLM_SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-secrets-injected
+                  key: llm_service_api_key
+            - name: LLM_SERVICE_AZURE_PROMPT_LLM
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: llm_service_azure_prompt_llm
+            - name: LLM_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-secrets-injected
+                  key: llm_service_endpoint
+            - name: VECTOR_DB_SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: vector_db_service_api_key
+            - name: VECTOR_DB_SERVICE_CHROMADB_QUERY_ROUTE
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-secrets-injected
+                  key: vector_db_service_chromadb_query_route
+            - name: VECTOR_DB_SERVICE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: dgpj-backend-secrets
+                  key: vector_db_service_endpoint
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
