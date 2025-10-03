@@ -2,5 +2,5 @@ apiVersion: v2
 name: dgpj-frontend
 description: example Helm chart
 type: application
-version: 0.0.1-4ed14f2
-appVersion: "0.0.1-4ed14f2"
+version: 0.0.1-aca8eb7
+appVersion: "0.0.1-aca8eb7"
