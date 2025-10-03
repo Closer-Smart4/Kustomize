@@ -57,7 +57,7 @@ spec:
             - name: LLM_SERVICE_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-injected
+                  name: dgpj-backend-secrets
                   key: llm_service_api_key
             - name: LLM_SERVICE_AZURE_PROMPT_LLM
               valueFrom:
@@ -67,7 +67,7 @@ spec:
             - name: LLM_SERVICE_ENDPOINT
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-injected
+                  name: dgpj-backend-secrets
                   key: llm_service_endpoint
             - name: VECTOR_DB_SERVICE_API_KEY
               valueFrom:
@@ -77,7 +77,7 @@ spec:
             - name: VECTOR_DB_SERVICE_CHROMADB_QUERY_ROUTE
               valueFrom:
                 secretKeyRef:
-                  name: dgpj-secrets-injected
+                  name: dgpj-backend-secrets
                   key: vector_db_service_chromadb_query_route
             - name: VECTOR_DB_SERVICE_ENDPOINT
               valueFrom:
